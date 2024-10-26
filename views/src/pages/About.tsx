@@ -2,12 +2,14 @@ import Layout from '../layouts/Layout'
 import { Title } from '@solidjs/meta'
 import { createQuery } from '@tanstack/solid-query'
 import ky from 'ky';
+import { Switch, Match } from 'solid-js';
 
-export default function About(props) {
+export default function About(props: { amount: string }) {
   const amount = () => props.amount;
+  type Data = { dollars: string; }
   const query = createQuery(() => ({
     queryKey: ['data'],
-    queryFn: () => ky.post('/data').json()
+    queryFn: () => ky.post<Data>('/data').json()
   }))
   return (
     <>
@@ -19,7 +21,7 @@ export default function About(props) {
             <p>{query.data.dollars}</p>
           </Match>
           <Match when={query.isError}>
-            <p>Error: {query.error}</p>
+            <p>Error: {query.error.message}</p>
           </Match>
           <Match when={query.isPending}>
             <p>loading...</p>

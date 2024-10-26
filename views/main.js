@@ -6,8 +6,8 @@ import "./app.css";
 createInertiaApp({
   //@ts-ignore
   resolve(name) {
-    const allPages = import.meta.glob('./src/**/*.jsx', { eager: true });
-    const page = allPages[`./src/pages/${name}.jsx`];
+    const allPages = import.meta.glob('./src/**/*.tsx', { eager: true });
+    const page = allPages[`./src/pages/${name}.tsx`];
     return page;
   },
 
